@@ -1,5 +1,5 @@
 {
-    "name": "microsoft/azure-storage-file",
+    "name": "fadighattas100/azure-storage-file",
     "version": "1.2.4",
     "description": "This project provides a set of PHP client libraries that make it easy to access Microsoft Azure Storage File APIs.",
     "keywords": [ "php", "azure", "storage", "sdk", "file" ],
