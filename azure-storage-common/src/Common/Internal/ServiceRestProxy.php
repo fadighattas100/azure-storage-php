@@ -297,7 +297,12 @@ class ServiceRestProxy extends RestProxy
 
         // add query parameters into headers
         if ($queryParams != null) {
-            $queryString = http_build_query($queryParams);
+	        $queryString = "";
+	        if (function_exists('Psr7\build_query')) {
+		        $queryString = Psr7\build_query($queryParams);
+	        } elseif (function_exists('http_build_query')) {
+		        $queryString = http_build_query($queryParams);
+	        }
             $uri = $uri->withQuery($queryString);
         }
 
@@ -306,7 +311,11 @@ class ServiceRestProxy extends RestProxy
         if (empty($body)) {
             if (empty($headers[Resources::CONTENT_TYPE])) {
                 $headers[Resources::CONTENT_TYPE] = Resources::URL_ENCODED_CONTENT_TYPE;
-                $actualBody = http_build_query($postParameters);
+	            if (function_exists('Psr7\build_query')) {
+		            $actualBody = Psr7\build_query($postParameters);
+	            } elseif (function_exists('http_build_query')) {
+		            $actualBody = http_build_query($postParameters);
+	            }
             }
         } else {
             $actualBody = $body;
